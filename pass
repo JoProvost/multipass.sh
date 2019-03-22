@@ -1,0 +1,31 @@
+#!/bin/bash
+
+readonly TITLE="Multi PASS"
+
+cd $(dirname $(readlink -f $0))
+
+. functions/base.sh
+
+. adapters/adb.sh
+. adapters/firefox.sh
+. adapters/openssl.sh
+. adapters/termux-dialog.sh
+. adapters/vault.sh
+. adapters/xdotool.sh
+. adapters/zenity.sh
+
+set -e
+
+site="${1:-}"
+
+ask site "Nom du site" "$(web_site)"
+load "$site"
+
+ask iterations "Nombre d'itérations" $(iterations "$site")
+ask length "Longueur" none
+secret pass "Mot de passe"
+
+type_password "$(password "${site}" "${pass}" "${iterations}" "${length}")"
+
+save "$site"
+
