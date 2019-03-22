@@ -6,13 +6,14 @@ cd $(dirname $(readlink -f $0))
 
 . functions/base.sh
 
-. adapters/adb.sh
+. adapters/android/adb-shell.sh
+. adapters/android/adb-shell-input.sh
+. adapters/android/termux-dialog.sh
 . adapters/firefox.sh
 . adapters/openssl.sh
-. adapters/termux-dialog.sh
 . adapters/vault.sh
-. adapters/xdotool.sh
-. adapters/zenity.sh
+. adapters/x11/xdotool.sh
+. adapters/x11/zenity.sh
 
 set -e
 
