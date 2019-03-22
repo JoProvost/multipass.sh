@@ -53,11 +53,11 @@ password() {
   local iterations="$3"
   local length="$4"
 
-  in="$(initialize "${site}" "${pass}")"
-  for i in $(seq $iterations); do
-    in="$(hash "${in}")"
+  local hash="$(initialize "${site}" "${pass}")"
+  for _ in $(seq $iterations); do
+    hash="$(hash "${hash}")"
   done
-  echo "${in}" \
+  echo "${hash}" \
     | sed 's/[^0-9a-zA-Z]//g' \
     | cut -c1-${length/none/}
 }
