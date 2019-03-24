@@ -1,6 +1,6 @@
 #!/bin/bash
 
-readonly TITLE="Multi PASS"
+readonly TITLE="Mot de passe"
 
 cd $(dirname $(readlink -f $0))
 
