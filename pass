@@ -24,9 +24,12 @@ load "$site"
 
 ask iterations "Nombre d'itérations" $(iterations "$site")
 ask length "Longueur" none
+ask filter "Filtre" "s/[^0-9a-zA-Z]//g"
 secret pass "Mot de passe"
 
-type_password "$(password "${site}" "${pass}" "${iterations}" "${length}")"
+type_password "$(
+  password "${site}" "${pass}" "${iterations}" \
+    | filter "${filter}" "${length}"
+)"
 
 save "$site"
-

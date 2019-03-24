@@ -47,6 +47,12 @@ load() {
   :
 }
 
+filter() {
+  local filter="$1"
+  local length="$2"
+  sed "${filter/none/}" | cut -c1-${length/none/}
+}
+
 password() {
   local site="$1"
   local pass="$2"
@@ -57,9 +63,7 @@ password() {
   for _ in $(seq $iterations); do
     hash="$(hash "${hash}")"
   done
-  echo "${hash}" \
-    | sed 's/[^0-9a-zA-Z]//g' \
-    | cut -c1-${length/none/}
+  echo "${hash}"
 }
 
 save() {
