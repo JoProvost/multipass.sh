@@ -2,6 +2,10 @@
 
 VAULT=${VAULT:-"${HOME}/d/crypt"}
 
+list() {
+  ls -1 "${VAULT}/${1}"
+}
+
 load() {
   if [ -f "${VAULT}/${1}" ]; then
     eval "$(sed -e 's/:[^:\/\/]/="/g;s/$/"/g;s/ *=/=/g' "${VAULT}/${1}")"

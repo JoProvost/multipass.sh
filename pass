@@ -19,6 +19,7 @@ set -e
 
 site="${1:-}"
 
+choose site "Sélectionnez le site" "$(web_site)" <(list)
 ask site "Nom du site" "$(web_site)"
 load "$site"
 

@@ -13,6 +13,10 @@ ask() {
   fi
 }
 
+choose() {
+  :
+}
+
 secret() {
   read -s -p "$2: " in
   echo ""
@@ -41,6 +45,10 @@ initialize() {
 
 iterations() {
   echo -n "$1" | wc -m
+}
+
+list() {
+  :
 }
 
 load() {
