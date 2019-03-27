@@ -9,8 +9,10 @@ cd $(dirname $(readlink -f $0))
 . adapters/android/adb-shell.sh
 . adapters/android/adb-shell-input.sh
 . adapters/android/termux-dialog.sh
+. adapters/base64.sh
 . adapters/firefox.sh
 . adapters/openssl.sh
+. adapters/sha1sum.sh
 . adapters/vault.sh
 . adapters/x11/xdotool.sh
 . adapters/x11/zenity.sh

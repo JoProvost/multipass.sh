@@ -8,8 +8,8 @@ _openssl_decode() {
   openssl base64 -d
 }
 
-_openssl_hash() {
-  echo "${1}" | decode | openssl dgst -binary -sha1 | encode
+_openssl_sha1() {
+  openssl dgst -binary -sha1
 }
 
 _use_openssl() {
@@ -19,5 +19,5 @@ _use_openssl() {
 if _use_openssl; then
   encode() { _openssl_encode "$@"; }
   decode() { _openssl_decode "$@"; }
-  hash() { _openssl_hash "$@"; }
+  sha1() { _openssl_sha1 "$@"; }
 fi

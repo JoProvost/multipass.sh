@@ -32,17 +32,6 @@ encode() {
   fail "missing encode feature"
 }
 
-hash() {
-  fail "missing hash feature"
-}
-
-initialize() {
-  local site="$1"
-  local pass="$2"
-
-  echo -n "${site}${pass}" | encode
-}
-
 iterations() {
   echo -n "$1" | wc -m
 }
@@ -67,15 +56,19 @@ password() {
   local iterations="$3"
   local length="$4"
 
-  local hash="$(initialize "${site}" "${pass}")"
+  local pass="$(echo -n "${site}${pass}" | encode)"
   for _ in $(seq $iterations); do
-    hash="$(hash "${hash}")"
+    pass="$(echo "${pass}" | decode | sha1 | encode)"
   done
-  echo "${hash}"
+  echo "${pass}"
 }
 
 save() {
   :
+}
+
+sha1() {
+  fail "missing sha1 feature"
 }
 
 type_password() {
