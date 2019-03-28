@@ -12,6 +12,6 @@ _use_base64() {
 }
 
 if _use_base64; then
-  encode() { _base64_encode "$@"; }
-  decode() { _base64_decode "$@"; }
+  encode() { _base64_encode; }
+  decode() { _base64_decode; }
 fi

@@ -17,7 +17,7 @@ _use_openssl() {
 }
 
 if _use_openssl; then
-  encode() { _openssl_encode "$@"; }
-  decode() { _openssl_decode "$@"; }
-  sha1() { _openssl_sha1 "$@"; }
+  encode() { _openssl_encode; }
+  decode() { _openssl_decode; }
+  sha1() { _openssl_sha1; }
 fi
