@@ -10,11 +10,11 @@ virtuellement impossible de récupérer le mot de passe maître à partir du mot
 
 ## Adapteurs
 Les fonctionnalités de l'application sont supportées par un ensemble d'adapteurs afin de s'adapter à l'environnement et
-aux outils disponnibles.
+aux outils disponibles.
 
 ### X11
 À l'exécution dans un environnement graphique X11, [Zenity] sera utilisé pour l'interaction avec l'utilisateur alors
-que [xdotool] sera responsable de tapper le mot de passe pour l'utilisateur.
+que [xdotool] sera responsable de taper le mot de passe pour l'utilisateur.
 
 ### Android
 Sous Android, [Termux-dialog] assure l'interaction avec l'utilisateur.  Pour éviter de passer par le presse-papier
