@@ -14,7 +14,7 @@ aux outils disponibles.
 
 ### X11
 À l'exécution dans un environnement graphique X11, [Zenity] sera utilisé pour l'interaction avec l'utilisateur alors
-que [xdotool] sera responsable de tapper le mot de passe pour l'utilisateur.
+que [xdotool] sera responsable de taper le mot de passe pour l'utilisateur.
 
 ### Android
 Sous Android, [Termux-dialog] assure l'interaction avec l'utilisateur.  Pour éviter de passer par le presse-papier
