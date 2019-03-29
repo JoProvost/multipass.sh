@@ -8,6 +8,20 @@ Il applique une [fonction de hachage cryptographique] sur une concaténation du 
 générer et le mot de passe maître.  Cette opération est effectuée un nombre défini d'itérations ce qui rend
 virtuellement impossible de récupérer le mot de passe maître à partir du mot de passe généré.
 
+## Utilisation
+
+### Sous Ubuntu
+
+    # Dépendances
+    sudo apt install git openssl xdotool zenity
+    
+    # Télécharger
+    mkdir -p ~/opt; cd ~/opt
+    git clone git@github.com:JoProvost/multipass.sh.git
+    
+    # Exécuter ou associer à un hot-key
+    ~/opt/multipass.sh/bin/multipass.sh [site]
+
 ## Adapteurs
 Les fonctionnalités de l'application sont supportées par un ensemble d'adapteurs afin de s'adapter à l'environnement et
 aux outils disponibles.
