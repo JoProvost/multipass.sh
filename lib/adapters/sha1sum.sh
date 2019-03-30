@@ -12,5 +12,5 @@ _use_sha1sum() {
 }
 
 if _use_sha1sum; then
-  sha1() { _sha1sum_sha1 "$@"; }
+  sha1() { _sha1sum_sha1; }
 fi

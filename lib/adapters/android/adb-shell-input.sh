@@ -1,8 +1,8 @@
 #!/bin/bash
 
-if [ -f adb-shell.sh ]; then
-  . adb-shell.sh
-fi
+cd $(dirname $(readlink -f ${BASH_SOURCE[0]}))
+. adb-shell.sh
+cd - >/dev/null
 
 _adb_type_password() {
   adb_shell input keyevent KEYCODE_APP_SWITCH

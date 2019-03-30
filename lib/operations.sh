@@ -1,5 +1,9 @@
 #!/bin/bash
 
+cd $(dirname $(readlink -f ${BASH_SOURCE[0]}))
+. adapters.sh
+cd - >/dev/null
+
 filter() {
   local filter="$1"
   local length="$2"
@@ -22,7 +26,6 @@ password() {
   local site="$1"
   local pass="$2"
   local iterations="$3"
-  local length="$4"
 
   local pass="$(echo -n "${site}${pass}" | encode)"
   for _ in $(seq $iterations); do

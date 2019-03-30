@@ -1,6 +1,6 @@
 #!/bin/bash
 
-VAULT=${VAULT:-"${HOME}/d/crypt"}
+VAULT=${VAULT:-"${HOME}/.multipass.sh"}
 
 list() {
   ls -1 "${VAULT}"

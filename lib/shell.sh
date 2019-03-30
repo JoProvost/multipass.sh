@@ -1,12 +1,10 @@
 #!/bin/bash
 
-if [ -f functions.sh ]; then
-  . functions.sh
-fi
-
-if [ -f adapters.sh ]; then
-  . adapters.sh
-fi
+cd $(dirname $(readlink -f ${BASH_SOURCE[0]}))
+. operations.sh
+. adapters.sh
+for adapter in $(find adapters/ -name '*.sh'); do . ${adapter}; done
+cd - >/dev/null
 
 pass() {
   initialize "$@"
