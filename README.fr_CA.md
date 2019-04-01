@@ -22,7 +22,7 @@ virtuellement impossible de récupérer le mot de passe maître à partir du mot
     # Exécuter ou associer à un hot-key
     ~/opt/multipass.sh/bin/multipass.sh [site]
 
-## Adapteurs
+## Adaptateurs
 Les fonctionnalités de l'application sont supportées par un ensemble d'adapteurs afin de s'adapter à l'environnement et
 aux outils disponibles.
 
@@ -35,6 +35,11 @@ Sous Android, [Termux-dialog] assure l'interaction avec l'utilisateur.  Pour év
 partagé, le mot de passe est tappé dans l'interface graphique à l'aide de l'outil de test [input], exécutable
 uniquement par [ADB], ce qui impose l'exécution d'un service via [ADB] à chaque redémarrage du téléphone.
 
+### Windows
+L'application peut fonctionner sous Windows grâce à [Cygwin/X] en activant `openssl`, `zenity`, `xorg-server` et
+`xinit`.  `xlaunch` et `git` peuvent également s'avérer utiles.  L'application [xdotool-for-windows] doit être
+présente dans le `$PATH` de l'application pour taper le mot de passe pour à la place de l'utilisateur.
+
 ## À voir aussi
  - [Cryptnos] d'où provient l'inspiration pour ce projet.
 
@@ -46,3 +51,5 @@ uniquement par [ADB], ce qui impose l'exécution d'un service via [ADB] à chaqu
 [Termux-dialog]: https://wiki.termux.com/wiki/Termux-dialog
 [input]: https://github.com/aosp-mirror/platform_frameworks_base/blob/master/cmds/input/src/com/android/commands/input/Input.java
 [ADB]: https://developer.android.com/studio/command-line/adb
+[xdotool-for-windows]: https://github.com/ebranlard/xdotool-for-windows
+[Cygwin/X]: https://x.cygwin.com/
