@@ -1,8 +1,8 @@
 #!/bin/bash
 
 cd $(dirname $(readlink -f ${BASH_SOURCE[0]}))
-. operations.sh
-. adapters.sh
+. ./operations.sh
+. ./adapters.sh
 for adapter in $(find adapters/ -name '*.sh'); do . ${adapter}; done
 cd - >/dev/null
 

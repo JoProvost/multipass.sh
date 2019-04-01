@@ -29,7 +29,7 @@ assert_that() {
   fi
 }
 
-readonly project_root=$(readlink -f $(dirname $(readlink -f ${BASH_SOURCE[0]}))/../)
+readonly project_root=$(dirname $(readlink -f ${BASH_SOURCE[0]}))/../
 error() {
   echo "> Error: $@" >&2
   if [ ${#FUNCNAME[@]} -gt 2 ]; then

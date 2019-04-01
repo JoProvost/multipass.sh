@@ -1,7 +1,7 @@
 #!/bin/bash
 
 cd $(dirname $(readlink -f ${BASH_SOURCE[0]}))
-. adapters.sh
+. ./adapters.sh
 cd - >/dev/null
 
 filter() {

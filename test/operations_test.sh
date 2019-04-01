@@ -1,7 +1,7 @@
 #!/bin/bash
 
 cd $(dirname $(readlink -f ${BASH_SOURCE[0]}))
-. functions.sh
+. ./functions.sh
 . ../lib/operations.sh
 cd - >/dev/null
 

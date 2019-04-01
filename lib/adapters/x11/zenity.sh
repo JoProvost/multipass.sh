@@ -1,7 +1,7 @@
 #!/bin/bash
 
 cd $(dirname $(readlink -f ${BASH_SOURCE[0]}))
-. x11.sh
+. ./x11.sh
 cd - >/dev/null
 
 _zenity_ask() {

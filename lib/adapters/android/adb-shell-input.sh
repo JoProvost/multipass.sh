@@ -1,7 +1,7 @@
 #!/bin/bash
 
 cd $(dirname $(readlink -f ${BASH_SOURCE[0]}))
-. adb-shell.sh
+. ./adb-shell.sh
 cd - >/dev/null
 
 _adb_type_password() {
