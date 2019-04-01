@@ -19,7 +19,7 @@ initialize() {
 }
 
 iterations() {
-  echo -n "$1" | wc -m
+  echo $(echo -n "$1" | wc -m)
 }
 
 password() {

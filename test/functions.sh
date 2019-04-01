@@ -4,7 +4,7 @@ run_test_suite() {
   errors=0
   echo "$0"
   for test in $( typeset -F | cut -d ' ' -f 3 | grep ^test_ ); do
-    standard_errors=$(tempfile)
+    standard_errors=$(mktemp ${TMPDIR:-"/tmp"}/multipass.XXXXXXX)
     (
       echo -n "  ${test}"
       if ${test} 2>${standard_errors} && [ "$(wc -l < ${standard_errors})" -eq 0 ]; then
