@@ -1,5 +1,9 @@
 #!/bin/bash
 
+cd $(dirname $(readlink -f ${BASH_SOURCE[0]}))
+. x11.sh
+cd - >/dev/null
+
 _zenity_ask() {
   local key="${1:-}"
   local text="${2:-}"
@@ -43,7 +47,7 @@ _zenity_secret() {
 }
 
 _use_zenity() {
-  which zenity >/dev/null && return 0 || return 1
+  use_x11 && which zenity >/dev/null && return 0 || return 1
 }
 
 if _use_zenity; then
