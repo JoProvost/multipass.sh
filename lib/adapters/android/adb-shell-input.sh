@@ -7,7 +7,7 @@ cd - >/dev/null
 _adb_type_password() {
   adb_shell input keyevent KEYCODE_APP_SWITCH
   adb_shell input keyevent KEYCODE_APP_SWITCH
-  sleep 2
+  adb_shell sleep 2
   adb_shell input text "$1"
 }
 

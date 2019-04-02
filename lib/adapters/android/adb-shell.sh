@@ -3,6 +3,8 @@
 ADB_PIPE=${ADB_PIPE:-/storage/self/primary/.adb-reader.pipe}
 ADB_PIPE_READER=${ADB_PIPE_READER:-$(dirname $ADB_PIPE)/adb-reader.sh}
 
+ADB_COMMAND_COUNTER=0
+
 adb_shell() {
   mkdir -p $ADB_PIPE
   local command=''
@@ -10,7 +12,7 @@ adb_shell() {
     i="${i//\\/\\\\}"
     command="$command \"${i//\"/\\\"}\""
   done
-  echo "$command" > $ADB_PIPE/$(date +%s.%N)
+  echo "$command" > $ADB_PIPE/$(date +%s).$(( ADB_COMMAND_COUNTER++ ))
 }
 
 _adb_shell_reader_install() {
@@ -23,7 +25,7 @@ echo \$0 is running!
 echo You can safely quit ADB by doing [Ctrl] + [C] and disconnect your phone.
 while true
 do
-  for f in $ADB_PIPE/*; do
+  for f in ${ADB_PIPE}/*; do
     if [ ! -f \$f ]; then
       sleep 1
     else
