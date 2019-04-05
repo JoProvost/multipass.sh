@@ -9,8 +9,8 @@ cd - >/dev/null
 pass() {
   initialize "$@"
 
-  propose site "Sélectionnez le site" "$(web_site)" <(list)
-  input site "Nom du site" "$(web_site)"
+  propose site "Sélectionnez le site" "$(suggested_site)" <(list)
+  input site "Nom du site" "$(suggested_site)"
   load "$site"
 
   input iterations "Nombre d'itérations" $(iterations "$site")

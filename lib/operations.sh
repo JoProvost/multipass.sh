@@ -27,6 +27,10 @@ iterations() {
   echo $(echo -n "$1" | wc -m)
 }
 
+suggested_site() {
+  echo $(web_site) | cut -d'/' -f3 | cut -d':' -f1  | rev | cut -d. -f2 | rev
+}
+
 password() {
   local site="$1"
   local pass="$2"

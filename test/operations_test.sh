@@ -82,4 +82,13 @@ test_salt() {
   assert_that $(salt | wc -m) = 32
 }
 
+test_suggested_site() {
+  web_site() { echo "https://github.com/JoProvost/multipass.sh"; }
+  assert_that $(suggested_site) = "github"
+
+  web_site() { echo "https://www.google.com/"; }
+  assert_that $(suggested_site) = "google"
+}
+
+
 run_test_suite

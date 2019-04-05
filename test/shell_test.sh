@@ -12,7 +12,7 @@ load() { :; }
 save() { :; }
 secret() { eval $1='"master_password"'; }
 type_password() { echo "$1"; }
-web_site() { :; }
+suggested_site() { :; }
 salt() { echo "random_salt";  }
 
 
@@ -92,7 +92,7 @@ test_generating_a_password_asking_for_site_and_loading_the_rest_from_vault() {
 }
 
 test_generating_a_password_proposes_a_list_of_known_sites() {
-  web_site() { echo "web_site_1"; }
+  suggested_site() { echo "web_site_1"; }
   list() { echo "known_site_1"; echo "known_site_2"; }
 
   propose() {
