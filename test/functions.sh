@@ -1,12 +1,16 @@
 #!/bin/bash
 
+setup() { :; }
+teardown() { :; }
+
 run_test_suite() {
   errors=0
   echo "$0"
   for test in $( typeset -F | cut -d ' ' -f 3 | grep ^test_ ); do
     standard_errors=$(mktemp ${TMPDIR:-"/tmp"}/multipass.XXXXXXX)
+    echo -n "  ${test}"
+    setup
     (
-      echo -n "  ${test}"
       if ${test} 2>${standard_errors} && [ "$(wc -l < ${standard_errors})" -eq 0 ]; then
         echo " ✔"
       else
@@ -16,6 +20,7 @@ run_test_suite() {
       fi
     )
     errors=$(( errors + $? ))
+    teardown
     rm ${standard_errors}
   done
   echo ""
@@ -29,7 +34,7 @@ assert_that() {
   fi
 }
 
-readonly project_root=$(dirname $(readlink -f ${BASH_SOURCE[0]}))/../
+readonly project_root=$(dirname $(dirname $(readlink -f ${BASH_SOURCE[0]})))
 error() {
   echo "> Error: $@" >&2
   if [ ${#FUNCNAME[@]} -gt 2 ]; then

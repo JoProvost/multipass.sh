@@ -4,7 +4,7 @@ cd $(dirname $(readlink -f ${BASH_SOURCE[0]}))
 . ./x11.sh
 cd - >/dev/null
 
-_zenity_ask() {
+_zenity_input() {
   local key="${1:-}"
   local text="${2:-}"
   local default="${3:-}"
@@ -13,6 +13,17 @@ _zenity_ask() {
     local value="$( zenity --entry --title="$TITLE" --text="$text" ${3+--entry-text=${default:-}} )"
     [ -n "$value" ]
     eval $key='"$value"'
+  fi
+}
+
+_zenity_question() {
+  local key="${1}"
+  local text="${2:-}"
+  local yes="${3:-true}"
+  local no="${4:-false}"
+
+  if ! [ "${!key:-}" ]; then
+    zenity --question --title="$TITLE" --text="$text" && eval $key='"${yes}"' || eval $key='"${no}"'
   fi
 }
 
@@ -51,7 +62,8 @@ _use_zenity() {
 }
 
 if _use_zenity; then
-  ask() { _zenity_ask "$@"; }
+  input() { _zenity_input "$@"; }
+  question() { _zenity_question "$@"; }
   propose() { _zenity_propose "$@"; }
   secret() { _zenity_secret "$@"; }
 fi

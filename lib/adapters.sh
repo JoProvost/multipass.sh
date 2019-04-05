@@ -1,28 +1,28 @@
 #!/bin/bash
 
-fail() {
+_fail() {
   echo "$@" >&2
   exit 1
 }
 
-ask() {
-  local key="${1:-}"
+decode() {
+  _fail "missing decode adapter"
+}
+
+encode() {
+  _fail "missing encode adapter"
+}
+
+input() {
+  local key="${1}"
   local text="${2:-}"
   local default="${3:-}"
 
   if ! [ "${!key:-}" ]; then
-    read -p "$text: " -i "${default:-}" value
-    test -n "$value"
-    eval $1='"$value"'
+    read -p "${text:-${key}}: " -i "${default:-}" value
+    test -n "${value}"
+    eval $1='"${value}"'
   fi
-}
-
-decode() {
-  fail "missing decode adapter"
-}
-
-encode() {
-  fail "missing encode adapter"
 }
 
 list() {
@@ -34,10 +34,30 @@ load() {
 }
 
 propose() {
-  local key="${1:-}"
+  local key="${1}"
   local text="${2:-}"
   local default="${3:-}"
   local list="${4:-}"
+}
+
+question() {
+  local key="${1}"
+  local text="${2:-}"
+  local yes="${3:-true}"
+  local no="${4:-false}"
+
+  if ! [ "${!key:-}" ]; then
+    _answer=""
+    input _answer
+    read -p "${text:-${key} ?} (Y/n)" -i "y" _answer
+
+    test -n "${_answer}"
+
+    case "${_answer}" in
+      'y') eval $1='"${yes}"' ;;
+      *)   eval $1='"${no}"'
+    esac
+  fi
 }
 
 save() {
@@ -45,23 +65,23 @@ save() {
 }
 
 secret() {
-  local key="${1:-}"
+  local key="${1}"
   local text="${2:-}"
 
-  read -s -p "$text: " value
+  read -s -p "${text:-${key}}: " value
   echo ""
   test -n "$value"
   eval $1='"$value"'
 }
 
 sha1() {
-  fail "missing sha1 adapter"
+  _fail "missing sha1 adapter"
 }
 
 type_password() {
   local password="$1"
 
-  echo "$password"
+  echo "${password}"
 }
 
 web_site() {

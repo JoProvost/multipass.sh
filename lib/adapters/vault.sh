@@ -12,6 +12,7 @@ load() {
   if [ -f "${VAULT}/${site}" ]; then
     eval "$(sed -e 's/:[^:\/\/]/="/g;s/$/"/g;s/ *=/=/g' "${VAULT}/${site}")"
     filter="${filter:-"s/[^0-9a-zA-Z]//g"}"
+    salt="${salt:-none}"
   fi
 }
 
@@ -24,6 +25,7 @@ save() {
 iterations: $iterations
 length: ${length:-none}
 filter: ${filter:-none}
+salt: ${salt:-none}
 ____EOF
   fi
 }

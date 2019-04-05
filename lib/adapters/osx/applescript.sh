@@ -10,7 +10,7 @@ _use_applescript() {
   which osascript >/dev/null && return 0 || return 1
 }
 
-_applescript_ask() {
+_applescript_input() {
   local key="${1:-}"
   local text="${2:-}"
   local default="${3:-}"
@@ -39,6 +39,6 @@ EOF
 
 if _use_applescript; then
   type_password() { _applescript_type_password "$@"; }
-  ask() { _applescript_ask "$@"; }
+  input() { _applescript_input "$@"; }
   secret() { _applescript_secret "$@"; }
 fi

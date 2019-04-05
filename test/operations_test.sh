@@ -24,6 +24,7 @@ test_initialize_without_parameters() {
   assert_that "$iterations" = ""
   assert_that "$length" = ""
   assert_that "$filter" = ""
+  assert_that "$salt" = ""
   assert_that "$pass" = ""
 }
 
@@ -34,16 +35,18 @@ test_initialize_with_the_site_name() {
   assert_that "$iterations" = ""
   assert_that "$length" = ""
   assert_that "$filter" = ""
+  assert_that "$salt" = ""
   assert_that "$pass" = ""
 }
 
 test_initialize_with_all_possible_parameters() {
-  initialize "site_name" "nb_iterations" "limit_of_characters" "filter_to_apply" "master_password_never_do_that"
+  initialize "site_name" "nb_iterations" "limit_of_characters" "filter_to_apply" "salt" "master_password_never_do_that"
 
   assert_that "$site" = "site_name"
   assert_that "$iterations" = "nb_iterations"
   assert_that "$length" = "limit_of_characters"
   assert_that "$filter" = "filter_to_apply"
+  assert_that "$salt" = "salt"
   assert_that "$pass" = "master_password_never_do_that"
 }
 
@@ -56,7 +59,15 @@ test_password_with_one_iteration() {
   decode() { echo "$(cat) | decode"; }
   sha1() { echo "$(cat) | sha1"; }
 
-  assert_that "$( password "(site)" "(pass)" "1" )" = "(site)(pass) | encode | decode | sha1 | encode"
+  assert_that "$( password "(site)" "(pass)" "(salt)" "1" )" = "(site)(pass)(salt) | encode | decode | sha1 | encode"
+}
+
+test_password_with_one_iteration_without_salt() {
+  encode() { echo "$(cat) | encode"; }
+  decode() { echo "$(cat) | decode"; }
+  sha1() { echo "$(cat) | sha1"; }
+
+  assert_that "$( password "(site)" "(pass)" "none" "1" )" = "(site)(pass) | encode | decode | sha1 | encode"
 }
 
 test_password_with_two_iterations() {
@@ -64,7 +75,11 @@ test_password_with_two_iterations() {
   decode() { echo "$(cat) | decode"; }
   sha1() { echo "$(cat) | sha1"; }
 
-  assert_that "$( password "(site)" "(pass)" "2" )" = "(site)(pass) | encode | decode | sha1 | encode | decode | sha1 | encode"
+  assert_that "$( password "(site)" "(pass)" "(salt)" "2" )" = "(site)(pass)(salt) | encode | decode | sha1 | encode | decode | sha1 | encode"
+}
+
+test_salt() {
+  assert_that $(salt | wc -m) = 32
 }
 
 run_test_suite

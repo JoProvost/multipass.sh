@@ -10,12 +10,17 @@ filter() {
   sed "${filter/none/}" | cut -c1-${length/none/}
 }
 
+salt() {
+  cat /dev/urandom | tr -dc "a-zA-Z0-9@#%^&*()_+?><~" | head -c32
+}
+
 initialize() {
   site="${1:-}"
   iterations="${2:-}"
   length="${3:-}"
   filter="${4:-}"
-  pass="${5:-}"
+  salt="${5:-}"
+  pass="${6:-}"
 }
 
 iterations() {
@@ -25,9 +30,10 @@ iterations() {
 password() {
   local site="$1"
   local pass="$2"
-  local iterations="$3"
+  local salt="$3"
+  local iterations="$4"
 
-  local pass="$(echo -n "${site}${pass}" | encode)"
+  local pass="$(echo -n "${site}${pass}${salt/none/}" | encode)"
   for _ in $(seq $iterations); do
     pass="$(echo "${pass}" | decode | sha1 | encode)"
   done

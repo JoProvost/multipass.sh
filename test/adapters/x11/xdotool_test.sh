@@ -1,8 +1,8 @@
 #!/bin/bash
 
 cd $(dirname $(readlink -f ${BASH_SOURCE[0]}))
-. ../functions.sh
-. ../../lib/adapters/x11/xdotool.sh
+. ../../functions.sh
+. ../../../lib/adapters/x11/xdotool.sh
 cd - >/dev/null
 
 test_xdotool_loaded_if_available_and_on_x11() {

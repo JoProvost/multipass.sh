@@ -10,16 +10,18 @@ pass() {
   initialize "$@"
 
   propose site "Sélectionnez le site" "$(web_site)" <(list)
-  ask site "Nom du site" "$(web_site)"
+  input site "Nom du site" "$(web_site)"
   load "$site"
 
-  ask iterations "Nombre d'itérations" $(iterations "$site")
-  ask length "Longueur" none
-  ask filter "Filtre" "s/[^0-9a-zA-Z]//g"
+  input iterations "Nombre d'itérations" $(iterations "$site")
+  input length "Longueur" none
+  input filter "Filtre" "s/[^0-9a-zA-Z]//g"
+  question salt "Voulez-vous ajouter un 'salage' au mot de passe?" "$(salt)" "none"
+
   secret pass "Mot de passe"
 
   type_password "$(
-    password "${site}" "${pass}" "${iterations}" \
+    password "${site}" "${pass}" "${salt}" "${iterations}" \
       | filter "${filter}" "${length}"
   )"
 

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-_termux_dialog_ask() {
+_termux_dialog_input() {
   if ! [ "${!1:-}" ]; then
     local in="$(termux-dialog text -t "$TITLE" -i "$2" | jq -r .text)"
     [ -n "$in" ]
@@ -19,6 +19,6 @@ _use_termux_dialog() {
 }
 
 if _use_termux_dialog; then
-  ask() { _termux_dialog_ask "$@"; }
+  input() { _termux_dialog_input "$@"; }
   secret() { _termux_dialog_secret "$@"; }
 fi

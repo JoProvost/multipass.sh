@@ -6,12 +6,14 @@ cd $(dirname $(readlink -f ${BASH_SOURCE[0]}))
 cd - >/dev/null
 
 propose() { :; }
-ask() { :; }
+input() { :; }
+question() { :; }
 load() { :; }
 save() { :; }
 secret() { eval $1='"master_password"'; }
 type_password() { echo "$1"; }
 web_site() { :; }
+salt() { echo "random_salt";  }
 
 
 test_generating_a_password_with_all_setings_from_command_line() {
@@ -19,7 +21,7 @@ test_generating_a_password_with_all_setings_from_command_line() {
 }
 
 test_generating_a_password_will_ask_all_setting_to_the_user() {
-  ask() {
+  input() {
     case $1 in
       site)       site='site' ;;
       iterations) iterations='4' ;;
@@ -27,8 +29,47 @@ test_generating_a_password_will_ask_all_setting_to_the_user() {
       filter)     filter='s/[^0-9a-zA-Z]//g' ;;
     esac
   }
+  question() {
+    local key="${1}"
+    local text="${2}"
+    local yes="${3}"
+    local no="${4}"
+    case ${key} in
+      salt)
+        assert_that "${yes}" = "random_salt"
+        assert_that "${no}" = "none"
+        salt='none'
+        ;;
+    esac
+  }
 
   assert_that "$( pass )" = "LpzFqyeTVIhpglEIaxHaZrGRIw"
+}
+
+test_generating_a_password_will_ask_all_setting_including_salt_to_the_user() {
+  input() {
+    case $1 in
+      site)       site='site' ;;
+      iterations) iterations='4' ;;
+      length)     length='none' ;;
+      filter)     filter='s/[^0-9a-zA-Z]//g' ;;
+    esac
+  }
+  question() {
+    local key="${1}"
+    local text="${2}"
+    local yes="${3}"
+    local no="${4}"
+    case ${key} in
+      salt)
+        assert_that "${yes}" = "random_salt"
+        assert_that "${no}" = "none"
+        salt='random_salt'
+        ;;
+    esac
+  }
+
+  assert_that "$( pass )" = "aDdCTbPESxt6tpkRVfi0KvSzJD0"
 }
 
 test_generating_a_password_asking_for_site_and_loading_the_rest_from_vault() {
@@ -41,7 +82,7 @@ test_generating_a_password_asking_for_site_and_loading_the_rest_from_vault() {
       ;;
     esac
   }
-  ask() {
+  input() {
     case $1 in
       site) site='site_name' ;;
     esac
