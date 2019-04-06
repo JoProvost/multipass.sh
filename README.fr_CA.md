@@ -13,7 +13,7 @@ virtuellement impossible de récupérer le mot de passe maître à partir du mot
 ### Sous Ubuntu
 
     # Dépendances
-    sudo apt install git openssl xdotool zenity
+    sudo apt install git openssl xdotool zenity python3-lz4
     
     # Télécharger
     mkdir -p ~/opt; cd ~/opt

@@ -1,6 +1,7 @@
 #!/bin/bash
 
 # See: https://unix.stackexchange.com/questions/385023/firefox-reading-out-urls-of-opened-tabs-from-the-command-line/389360#389360
+# On Ububtu, install python3-lz4
 
 _firefox_tab_number() {
 export opentabs=$(find ~/.mozilla/firefox*/*.default/sessionstore-backups/recovery.jsonlz4);
