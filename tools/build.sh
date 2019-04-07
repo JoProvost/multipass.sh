@@ -28,9 +28,26 @@ readlink() {
   fi
 }
 
-errors=0
-for suite in $(find $(dirname $0) -name '*_test.sh'); do
-  $suite
-  errors=$(( errors + $? ))
-done
-exit $errors
+build() {
+  output=$(readlink -f ${2:-build/$(basename $1)})
+  mkdir -p $(dirname $output)
+  echo "#!/bin/bash" > $output
+  echo "readonly BUILD_MULTIPASS_SH=false" >> $output
+
+  set -- "$1"
+  source $1
+}
+
+source_all() {
+  for adapter in "${@}"; do source ${adapter}; done
+}
+
+source() {
+  BUILD_MULTIPASS_SH=true
+  ( . $1 )
+  echo "" >> $output
+  echo "# source $1" >> $output
+  grep -v '^source ' "$1" | grep -v '^source_all ' | grep -v '^cd' >> $output
+}
+
+build "${@}"

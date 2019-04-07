@@ -2,7 +2,7 @@
 # https://github.com/ebranlard/xdotool-for-windows
 
 cd $(dirname $(readlink -f ${BASH_SOURCE[0]}))
-. ./windows.sh
+source ./windows.sh
 cd - >/dev/null
 
 _xdotool_for_windows_type_password() {
@@ -20,4 +20,4 @@ load_xdotool_for_windows() {
     fi
 }
 
-load_xdotool_for_windows
+[ "${BUILD_MULTIPASS_SH:-}" = "true" ] || load_xdotool_for_windows

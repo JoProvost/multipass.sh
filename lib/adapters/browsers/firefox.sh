@@ -31,6 +31,10 @@ _use_firefox() {
   [ -f ~/.mozilla/firefox*/*.default/sessionstore-backups/recovery.jsonlz4 ] && return 0 || return 1
 }
 
-if _use_firefox; then
-  web_site() { _firefox_web_site; }
-fi
+load_firefox() {
+  if _use_firefox; then
+    web_site() { _firefox_web_site; }
+  fi
+}
+
+[ "${BUILD_MULTIPASS_SH:-}" = "true" ] || load_firefox

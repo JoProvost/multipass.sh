@@ -16,8 +16,12 @@ _use_openssl() {
   which openssl >/dev/null && return 0 || return 1
 }
 
-if _use_openssl; then
-  encode() { _openssl_encode; }
-  decode() { _openssl_decode; }
-  sha1() { _openssl_sha1; }
-fi
+load_openssl() {
+  if _use_openssl; then
+    encode() { _openssl_encode; }
+    decode() { _openssl_decode; }
+    sha1() { _openssl_sha1; }
+  fi
+}
+
+[ "${BUILD_MULTIPASS_SH:-}" = "true" ] || load_openssl

@@ -11,6 +11,10 @@ _use_sha1sum() {
   return 0
 }
 
-if _use_sha1sum; then
-  sha1() { _sha1sum_sha1; }
-fi
+load_sha1sum() {
+  if _use_sha1sum; then
+    sha1() { _sha1sum_sha1; }
+  fi
+}
+
+[ "${BUILD_MULTIPASS_SH:-}" = "true" ] || load_sha1sum

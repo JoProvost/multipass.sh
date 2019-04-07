@@ -11,7 +11,11 @@ _use_base64() {
   which base64 >/dev/null && return 0 || return 1
 }
 
-if _use_base64; then
-  encode() { _base64_encode; }
-  decode() { _base64_decode; }
-fi
+load_base64() {
+  if _use_base64; then
+    encode() { _base64_encode; }
+    decode() { _base64_decode; }
+  fi
+}
+
+[ "${BUILD_MULTIPASS_SH:-}" = "true" ] || load_base64

@@ -1,8 +1,8 @@
 #!/bin/bash
 
 cd $(dirname $(readlink -f ${BASH_SOURCE[0]}))
-. ../functions.sh
-. ../../lib/adapters/vault.sh
+source ../functions.sh
+source ../../lib/adapters/vault.sh
 cd - >/dev/null
 
 setup() {

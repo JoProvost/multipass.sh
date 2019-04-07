@@ -1,9 +1,11 @@
 #!/bin/bash
 
+readonly TITLE="multipass.sh"
+
 cd $(dirname $(readlink -f ${BASH_SOURCE[0]}))
-. ./operations.sh
-. ./adapters.sh
-for adapter in $(find adapters/ -name '*.sh'); do . ${adapter}; done
+source ./operations.sh
+source ./adapters.sh
+source_all $(find adapters/ -name '*.sh')
 cd - >/dev/null
 
 pass() {

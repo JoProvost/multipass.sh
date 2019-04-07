@@ -1,8 +1,12 @@
 #!/bin/bash
 
 cd $(dirname $(readlink -f ${BASH_SOURCE[0]}))
-. ./adapters.sh
+source ./adapters.sh
 cd - >/dev/null
+
+source_all() {
+  for adapter in "${@}"; do source ${adapter}; done
+}
 
 filter() {
   local filter="$1"

@@ -1,7 +1,7 @@
 #!/bin/bash
 
 cd $(dirname $(readlink -f ${BASH_SOURCE[0]}))
-. ./x11.sh
+source ./x11.sh
 cd - >/dev/null
 
 _xdotool_type_password() {
@@ -22,4 +22,4 @@ load_xdotool() {
   fi
 }
 
-load_xdotool
+[ "${BUILD_MULTIPASS_SH:-}" = "true" ] || load_xdotool

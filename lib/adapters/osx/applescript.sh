@@ -37,8 +37,12 @@ EOF
   eval $key='"$value"'
 }
 
-if _use_applescript; then
-  type_password() { _applescript_type_password "$@"; }
-  input() { _applescript_input "$@"; }
-  secret() { _applescript_secret "$@"; }
-fi
+load_applescript() {
+  if _use_applescript; then
+    type_password() { _applescript_type_password "$@"; }
+    input() { _applescript_input "$@"; }
+    secret() { _applescript_secret "$@"; }
+  fi
+}
+
+[ "${BUILD_MULTIPASS_SH:-}" = "true" ] || load_applescript

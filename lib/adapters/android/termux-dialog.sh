@@ -18,7 +18,11 @@ _use_termux_dialog() {
   which termux-dialog >/dev/null && return 0 || return 1
 }
 
-if _use_termux_dialog; then
-  input() { _termux_dialog_input "$@"; }
-  secret() { _termux_dialog_secret "$@"; }
-fi
+load_termux_dialog() {
+  if _use_termux_dialog; then
+    input() { _termux_dialog_input "$@"; }
+    secret() { _termux_dialog_secret "$@"; }
+  fi
+}
+
+[ "${BUILD_MULTIPASS_SH:-}" = "true" ] || load_termux_dialog

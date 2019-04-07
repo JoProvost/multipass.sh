@@ -1,7 +1,7 @@
 #!/bin/bash
 
 cd $(dirname $(readlink -f ${BASH_SOURCE[0]}))
-. ./adb-shell.sh
+source ./adb-shell.sh
 cd - >/dev/null
 
 _adb_type_password() {
@@ -11,6 +11,10 @@ _adb_type_password() {
   adb_shell input text "$1"
 }
 
-if use_adb_shell; then
-  type_password() { _adb_type_password "$@"; }
-fi
+load_adb_shell_input() {
+  if use_adb_shell; then
+    type_password() { _adb_type_password "$@"; }
+  fi
+}
+
+[ "${BUILD_MULTIPASS_SH:-}" = "true" ] || load_adb_shell_input

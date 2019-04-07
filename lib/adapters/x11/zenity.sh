@@ -1,7 +1,7 @@
 #!/bin/bash
 
 cd $(dirname $(readlink -f ${BASH_SOURCE[0]}))
-. ./x11.sh
+source ./x11.sh
 cd - >/dev/null
 
 _zenity_input() {
@@ -61,9 +61,13 @@ _use_zenity() {
   use_x11 && which zenity >/dev/null && return 0 || return 1
 }
 
-if _use_zenity; then
-  input() { _zenity_input "$@"; }
-  question() { _zenity_question "$@"; }
-  propose() { _zenity_propose "$@"; }
-  secret() { _zenity_secret "$@"; }
-fi
+load_zenity() {
+  if _use_zenity; then
+    input() { _zenity_input "$@"; }
+    question() { _zenity_question "$@"; }
+    propose() { _zenity_propose "$@"; }
+    secret() { _zenity_secret "$@"; }
+  fi
+}
+
+[ "${BUILD_MULTIPASS_SH:-}" = "true" ] || load_zenity

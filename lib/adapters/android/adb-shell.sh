@@ -45,6 +45,10 @@ use_adb_shell() {
   [ -d $(dirname ${ADB_SPOOL}) ] && return 0 || return 1
 }
 
-if use_adb_shell; then
-  _adb_shell_spooler_install
-fi
+load_adb_shell() {
+  if use_adb_shell; then
+    _adb_shell_spooler_install
+  fi
+}
+
+[ "${BUILD_MULTIPASS_SH:-}" = "true" ] || load_adb_shell
