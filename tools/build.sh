@@ -29,13 +29,16 @@ readlink() {
 }
 
 build() {
-  output=$(readlink -f ${2:-build/$(basename $1)})
+  output=${2:-build/$(basename $1)}
   mkdir -p $(dirname $output)
+  output=$(readlink -f ${output})
+  rm -f ${output}.deps
   echo "#!/bin/bash" > $output
   echo "readonly BUILD_MULTIPASS_SH=false" >> $output
 
   set -- "$1"
   source $1
+  rm -f ${output}.deps
 }
 
 source_all() {
@@ -44,10 +47,15 @@ source_all() {
 
 source() {
   BUILD_MULTIPASS_SH=true
-  ( . $1 )
-  echo "" >> $output
-  echo "# source $1" >> $output
-  grep -v '^source ' "$1" | grep -v '^source_all ' | grep -v '^cd' >> $output
+  touch ${output}.deps
+  source_file="$(readlink -f $1)"
+  if ! grep -Fxq "${source_file}" "${output}.deps"; then
+    echo ${source_file} >> "${output}.deps"
+    ( . $1 )
+    echo "" >> $output
+    echo "# source $1" >> $output
+    grep -v '^source ' "$1" | grep -v '^source_all ' | grep -v '^cd' | grep -v '^#!\/bin\/bash'>> $output
+  fi
 }
 
 build "${@}"

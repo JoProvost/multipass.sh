@@ -1,9 +1,14 @@
-.PHONY: all test
+.PHONY: all test build
 
-all: test multipass.sh
+all: test build
 
 test:
 	@ test/test.sh
 
-multipass.sh: bin/multipass.sh tools/build.sh lib/*.sh lib/*/*.sh lib/*/*/*.sh
+build: build/multipass.sh
+
+build/multipass.sh: bin/multipass.sh tools/build.sh lib/*.sh lib/*/*.sh lib/*/*/*.sh
 	tools/build.sh $< $@
+
+clean:
+	rm -Rf build
