@@ -1,9 +1,9 @@
 #!/bin/bash
 # https://github.com/ebranlard/xdotool-for-windows
 
-cd $(dirname $(readlink -f ${BASH_SOURCE[0]}))
+pushd $(dirname $(readlink -f ${BASH_SOURCE[0]})) >/dev/null
 source ./windows.sh
-cd - >/dev/null
+popd >/dev/null
 
 _xdotool_for_windows_type_password() {
   sleep 1

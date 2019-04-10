@@ -1,9 +1,9 @@
 #!/bin/bash
 
-cd $(dirname $(readlink -f ${BASH_SOURCE[0]}))
+pushd $(dirname $(readlink -f ${BASH_SOURCE[0]})) >/dev/null
 . ./functions.sh
 . ../lib/shell.sh
-cd - >/dev/null
+popd >/dev/null
 
 propose() { :; }
 input() { :; }

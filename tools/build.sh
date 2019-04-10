@@ -54,7 +54,13 @@ source() {
     ( . $1 )
     echo "" >> $output
     echo "# source $1" >> $output
-    grep -v '^source ' "$1" | grep -v '^source_all ' | grep -v '^cd' | grep -v '^#!\/bin\/bash'>> $output
+    grep -v '^#!\/bin\/bash' "$1" \
+      | grep -v '^pushd' \
+      | grep -v '^source ' "$1" \
+      | grep -v '^source_all ' \
+      | grep -v '^popd' \
+      | grep -v '^#!\/bin\/bash' \
+      >> $output
   fi
 }
 

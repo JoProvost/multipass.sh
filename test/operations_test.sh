@@ -1,9 +1,9 @@
 #!/bin/bash
 
-cd $(dirname $(readlink -f ${BASH_SOURCE[0]}))
+pushd $(dirname $(readlink -f ${BASH_SOURCE[0]})) >/dev/null
 . ./functions.sh
 . ../lib/operations.sh
-cd - >/dev/null
+popd >/dev/null
 
 test_filter_removes_undesired_characters() {
   assert_that "$( echo "ab1/cde34_=fg56" | filter "s/[^0-9a-zA-Z]//g" "none" )" = "ab1cde34fg56"

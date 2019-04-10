@@ -1,9 +1,9 @@
 #!/bin/bash
 
-cd $(dirname $(readlink -f ${BASH_SOURCE[0]}))
+pushd $(dirname $(readlink -f ${BASH_SOURCE[0]})) >/dev/null
 source ../functions.sh
 source ../../lib/adapters/vault.sh
-cd - >/dev/null
+popd >/dev/null
 
 setup() {
   vault=$(mktemp -d ${TMPDIR:-"/tmp"}/multipass.XXXXXXX)

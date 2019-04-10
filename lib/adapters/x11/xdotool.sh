@@ -1,8 +1,8 @@
 #!/bin/bash
 
-cd $(dirname $(readlink -f ${BASH_SOURCE[0]}))
+pushd $(dirname $(readlink -f ${BASH_SOURCE[0]})) >/dev/null
 source ./x11.sh
-cd - >/dev/null
+popd >/dev/null
 
 _xdotool_type_password() {
   xdotool sleep 1 type "$1"

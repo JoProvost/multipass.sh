@@ -2,11 +2,11 @@
 
 readonly TITLE="multipass.sh"
 
-cd $(dirname $(readlink -f ${BASH_SOURCE[0]}))
+pushd $(dirname $(readlink -f ${BASH_SOURCE[0]})) >/dev/null
 source ./operations.sh
 source ./adapters.sh
 source_all $(find adapters/ -name '*.sh')
-cd - >/dev/null
+popd >/dev/null
 
 pass() {
   initialize "$@"

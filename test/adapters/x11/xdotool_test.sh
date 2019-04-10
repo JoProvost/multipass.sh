@@ -1,9 +1,9 @@
 #!/bin/bash
 
-cd $(dirname $(readlink -f ${BASH_SOURCE[0]}))
+pushd $(dirname $(readlink -f ${BASH_SOURCE[0]})) >/dev/null
 . ../../functions.sh
 . ../../../lib/adapters/x11/xdotool.sh
-cd - >/dev/null
+popd >/dev/null
 
 test_xdotool_loaded_if_available_and_on_x11() {
   type_password() { error "type_password was not replaced by load_xdotool"; }

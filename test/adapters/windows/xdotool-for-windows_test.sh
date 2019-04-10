@@ -1,9 +1,9 @@
 #!/bin/bash
 
-cd $(dirname $(readlink -f ${BASH_SOURCE[0]}))
+pushd $(dirname $(readlink -f ${BASH_SOURCE[0]})) >/dev/null
 . ../../functions.sh
 . ../../../lib/adapters/windows/xdotool-for-windows.sh
-cd - >/dev/null
+popd >/dev/null
 
 test_xdotool_for_windows_loaded_if_available_and_on_windows() {
   type_password() { error "type_password was not replaced by load_xdotool (called with $1)"; }

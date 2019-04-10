@@ -5,17 +5,17 @@ ADB_SPOOLER=${ADB_SPOOLER:-$(dirname $ADB_SPOOL)/adb-spooler.sh}
 
 ADB_COMMAND_COUNTER=0
 
-adb_shell() {
+android_shell_adb() {
   mkdir -p $ADB_SPOOL
-  local command=''
+  local c=''
   for i in "$@"; do
     i="${i//\\/\\\\}"
-    command="$command \"${i//\"/\\\"}\""
+    c="${c:+${c} }\"${i//\"/\\\"}\""
   done
-  echo "$command" > $ADB_SPOOL/$(date +%s).$(( ADB_COMMAND_COUNTER++ ))
+  echo "$c" > $ADB_SPOOL/$(date +%s).$(( ADB_COMMAND_COUNTER++ ))
 }
 
-_adb_shell_spooler_install() {
+android_shell_adb_spooler_install() {
   if ! [ -f $ADB_SPOOLER ]; then
     mkdir -p $(dirname $ADB_SPOOLER)
 
@@ -40,15 +40,3 @@ ____EOF
     echo "  adb shell sh $ADB_SPOOLER"
   fi
 }
-
-use_adb_shell() {
-  [ -d $(dirname ${ADB_SPOOL}) ] && return 0 || return 1
-}
-
-load_adb_shell() {
-  if use_adb_shell; then
-    _adb_shell_spooler_install
-  fi
-}
-
-[ "${BUILD_MULTIPASS_SH:-}" = "true" ] || load_adb_shell
