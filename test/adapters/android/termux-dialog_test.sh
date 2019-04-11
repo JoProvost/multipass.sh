@@ -11,13 +11,11 @@ question() { fail "question unchanged ($*)"; }
 termux-dialog() { fail "termux-dialog unchanged ($*)"; }
 which() { true; }
 
-TITLE='${TITLE}'
-
 test_termux_dialog_input() {
   load_termux_dialog
 
   termux-dialog() {
-    assert_that "$(command_line "$@")" = 'text -t "${TITLE}: text" -i default'
+    assert_that "$(command_line "$@")" = 'text -t text -i default'
     echo '{ "code": -1, "text": "value" }'
   }
 
@@ -30,7 +28,7 @@ test_termux_dialog_input_without_value_returns_default() {
   load_termux_dialog
 
   termux-dialog() {
-    assert_that "$(command_line "$@")" = 'text -t "${TITLE}: text" -i default'
+    assert_that "$(command_line "$@")" = 'text -t text -i default'
     echo '{ "code": -1, "text": "" }'
   }
 
@@ -43,7 +41,7 @@ test_termux_dialog_input_canceled_returns_empty() {
   load_termux_dialog
 
   termux-dialog() {
-    assert_that "$(command_line "$@")" = 'text -t "${TITLE}: text" -i default'
+    assert_that "$(command_line "$@")" = 'text -t text -i default'
     echo '{ "code": -2, "text": "" }'
   }
 
@@ -55,7 +53,7 @@ test_termux_dialog_question_yes() {
   load_termux_dialog
 
   termux-dialog() {
-    assert_that "$(command_line "$@")" = 'confirm -t ${TITLE} -i text'
+    assert_that "$(command_line "$@")" = 'confirm -t text'
     echo '{ "code": -1, "text": "yes" }'
   }
 
@@ -68,7 +66,7 @@ test_termux_dialog_question_no() {
   load_termux_dialog
 
   termux-dialog() {
-    assert_that "$(command_line "$@")" = 'confirm -t ${TITLE} -i text'
+    assert_that "$(command_line "$@")" = 'confirm -t text'
     echo '{ "code": -1, "text": "no" }'
   }
 
@@ -81,7 +79,7 @@ test_termux_dialog_question_cancel() {
   load_termux_dialog
 
   termux-dialog() {
-    assert_that "$(command_line "$@")" = 'confirm -t ${TITLE} -i text'
+    assert_that "$(command_line "$@")" = 'confirm -t text'
     echo '{ "code": -2, "text": "no" }'
   }
 
@@ -93,7 +91,7 @@ test_termux_dialog_secret() {
   load_termux_dialog
 
   termux-dialog() {
-    assert_that "$(command_line "$@")" = 'text -p -t "${TITLE}: text"'
+    assert_that "$(command_line "$@")" = 'text -p -t text'
     echo '{ "code": -1, "text": "value" }'
   }
 
@@ -106,7 +104,7 @@ test_termux_dialog_secret_canceled() {
   load_termux_dialog
 
   termux-dialog() {
-    assert_that "$(command_line "$@")" = 'text -p -t "${TITLE}: text"'
+    assert_that "$(command_line "$@")" = 'text -p -t text'
     echo '{ "code": -2, "text": "value" }'
   }
 

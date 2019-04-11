@@ -6,7 +6,7 @@ _termux_dialog_input() {
   local default="${3:-}"
 
   if ! [ "${!key:-}" ]; then
-    local result=$(termux-dialog text -t "$TITLE: ${text}" -i "${default}")
+    local result=$(termux-dialog text -t "${text}" -i "${default}")
     local result_code="$(echo "${result}" | jq -r .code)"
     local result_text="$(echo "${result}" | jq -r .text)"
     local result_text="${result_text:-${default}}"
@@ -22,7 +22,7 @@ _termux_dialog_secret() {
   local key="${1}"
   local text="${2:-}"
 
-  local result=$(termux-dialog text -p -t "$TITLE: ${text}")
+  local result=$(termux-dialog text -p -t "${text}")
   local result_code="$(echo "${result}" | jq -r .code)"
   local result_text="$(echo "${result}" | jq -r .text)"
 
@@ -39,7 +39,7 @@ _termux_dialog_question() {
   local no="${4:-false}"
 
   if ! [ "${!key:-}" ]; then
-    local result=$(termux-dialog confirm -t "$TITLE" -i "${text}")
+    local result=$(termux-dialog confirm -t "${text}")
     local result_code="$(echo "${result}" | jq -r .code)"
     local result_text="$(echo "${result}" | jq -r .text)"
 

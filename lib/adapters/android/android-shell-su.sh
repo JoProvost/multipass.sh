@@ -10,5 +10,5 @@ android_shell_su() {
 }
 
 use_android_shell_su() {
-  which su && return 0 || return 1
+  which su >/dev/null && return 0 || return 1
 }
