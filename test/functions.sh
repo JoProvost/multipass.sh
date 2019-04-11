@@ -34,9 +34,24 @@ assert_that() {
   fi
 }
 
+fail() {
+  error Failed "$@"
+}
+
+command_line() {
+  local c=''
+  for i in "$@"; do
+    i="${i//\\/\\\\}"
+    i="${i//\"/\\\"}"
+    [[ "${i}" =~ ( |\') ]] && i="\"${i}\""
+    c="${c:+${c} }${i}"
+  done
+  echo "${c}"
+}
+
 readonly project_root=$(dirname $(dirname $(readlink -f ${BASH_SOURCE[0]})))
 error() {
-  echo "> Error: $@" >&2
+  echo "> Error: $(command_line "${@}")" >&2
   if [ ${#FUNCNAME[@]} -gt 2 ]; then
     echo "  Call stack:"
     for ((i=1;i<${#FUNCNAME[@]}-1;i++)); do

@@ -1,17 +1,55 @@
 #!/bin/bash
 
 _termux_dialog_input() {
-  if ! [ "${!1:-}" ]; then
-    local in="$(termux-dialog text -t "$TITLE" -i "$2" | jq -r .text)"
-    [ -n "$in" ]
-    eval $1='"$in"'
+  local key="${1}"
+  local text="${2:-}"
+  local default="${3:-}"
+
+  if ! [ "${!key:-}" ]; then
+    local result=$(termux-dialog text -t "$TITLE: ${text}" -i "${default}")
+    local result_code="$(echo "${result}" | jq -r .code)"
+    local result_text="$(echo "${result}" | jq -r .text)"
+    local result_text="${result_text:-${default}}"
+
+    [ "${result_code}" != "-2" ] || return 1
+    [ -n "${result_text}" ] || return 1
+
+    eval ${key}='"${result_text}"'
   fi
 }
 
 _termux_dialog_secret() {
-  local in="$(termux-dialog text -p -t "$TITLE" | jq -r .text)"
-  [ -n "$in" ]
-  eval $1='"$in"'
+  local key="${1}"
+  local text="${2:-}"
+
+  local result=$(termux-dialog text -p -t "$TITLE: ${text}")
+  local result_code="$(echo "${result}" | jq -r .code)"
+  local result_text="$(echo "${result}" | jq -r .text)"
+
+  [ "${result_code}" != "-2" ] || return 1
+  [ -n "${result_text}" ] || return 1
+
+  eval ${key}='"${result_text}"'
+}
+
+_termux_dialog_question() {
+  local key="${1}"
+  local text="${2:-}"
+  local yes="${3:-true}"
+  local no="${4:-false}"
+
+  if ! [ "${!key:-}" ]; then
+    local result=$(termux-dialog confirm -t "$TITLE" -i "${text}")
+    local result_code="$(echo "${result}" | jq -r .code)"
+    local result_text="$(echo "${result}" | jq -r .text)"
+
+    [ "${result_code}" != "-2" ] || return 1
+
+    case "${result_text}" in
+      'yes') eval $1='"${yes}"' ;;
+      'no')  eval $1='"${no}"' ;;
+    esac
+  fi
 }
 
 _use_termux_dialog() {
@@ -22,6 +60,7 @@ load_termux_dialog() {
   if _use_termux_dialog; then
     input() { _termux_dialog_input "$@"; }
     secret() { _termux_dialog_secret "$@"; }
+    question() { _termux_dialog_question "$@"; }
   fi
 }
 
