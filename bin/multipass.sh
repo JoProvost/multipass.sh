@@ -1,4 +1,9 @@
 #!/bin/bash
+if [ -f ~/.multipass.sh/.env ]
+then
+    . ~/.multipass.sh/.env
+fi
+
 [ "${BUILD_MULTIPASS_SH:-}" = "true" ] || cat <<"BANNER"
                       _  _    _                                  _
     _ __ ___   _   _ | || |_ (_) _ __    __ _  ___  ___     ___ | |__

@@ -14,13 +14,45 @@ virtuellement impossible de récupérer le mot de passe maître à partir du mot
 
     # Dépendances
     sudo apt install git openssl xdotool zenity python3-lz4
-    
+
     # Télécharger
     mkdir -p ~/opt; cd ~/opt
-    git clone git@github.com:JoProvost/multipass.sh.git
-    
+    git clone https://github.com/JoProvost/multipass.sh.git
+
+    # Configurer l'environnement
+    mkdir -p ~/.multipass.sh
+
     # Exécuter ou associer à un hot-key
     ~/opt/multipass.sh/bin/multipass.sh [site]
+
+### Sous OSX
+
+    # Dépendances (voir https://brew.sh/)
+    /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+    brew install coreutils
+    brew install gnu-sed
+    brew install zenity
+
+    # Télécharger
+    mkdir -p ~/opt; cd ~/opt
+    git clone https://github.com/JoProvost/multipass.sh.git
+
+    # Configurer l'environnement
+    mkdir -p ~/.multipass.sh
+    cat > ~/.multipass.sh/.env <<"EOF"
+    export PATH="$(brew --prefix coreutils)/libexec/gnubin:$PATH"
+    export PATH="$(brew --prefix gnu-sed)/libexec/gnubin:$PATH"
+    export LANG="fr_CA.UTF-8"
+    EOF
+
+    # Exécuter ou associer à un hot-key
+    ~/opt/multipass.sh/bin/multipass.sh [site]
+    
+#### Raccourci clavier
+
+Il est recommandé d'associer ce script à une action rapide clavier (hot-key) grâce à [iCanHasShortcuts].
+
+![configuration du raccourci](iCanHasShortcut-config.png)
 
 ## Adaptateurs
 Les fonctionnalités de l'application sont supportées par un ensemble d'adapteurs afin de s'adapter à l'environnement et
@@ -29,6 +61,11 @@ aux outils disponibles.
 ### X11
 À l'exécution dans un environnement graphique X11, [Zenity] sera utilisé pour l'interaction avec l'utilisateur alors
 que [xdotool] sera responsable de taper le mot de passe pour l'utilisateur.
+
+### OSX
+Sur OSX, les variantes GNU de `sed` et de `readlink` doivent avoir été installées préalablement et présentes dans
+`$PATH`. `osascript` sera utilisé pour l'interaction avec l'utilisateur et sera responsable de taper le mot de
+passe pour l'utilisateur.
 
 ### Android
 Sous Android, [Termux-dialog] assure l'interaction avec l'utilisateur.  Pour éviter de passer par le presse-papier
@@ -53,3 +90,4 @@ présente dans le `$PATH` de l'application pour taper le mot de passe pour à la
 [ADB]: https://developer.android.com/studio/command-line/adb
 [xdotool-for-windows]: https://github.com/ebranlard/xdotool-for-windows
 [Cygwin/X]: https://x.cygwin.com/
+[iCanHasShortcuts]: https://github.com/deseven/icanhazshortcut
